@@ -1,0 +1,61 @@
+type User {
+    id: Int!
+    createdAt: String!
+    email: String!
+    updatedAt: String!
+}
+type Affiliate {
+    id: Int!
+    createdAt: String!
+    affiliate_fname: String!
+    affiliate_lname: String!
+    affiliate_email: String!
+    affiliate_phone: String
+    affiliate_subdomain: String!
+    updatedAt: String!
+
+}
+
+type Contact {
+    id: Int!
+    createdAt: String!
+    updatedAt: String!
+    given_name: String!
+    family_name: String
+    email: String!
+    phone: String!
+    affiliate_id: Int!
+}
+
+type Token {
+    token: String
+}
+
+# Root Types
+type Query {
+    User(id: Int!): User
+    allUsers: [User]
+    Affiliate(id: Int!): Affiliate
+    allAffiliates: [Affiliate]
+    Contact(id: Int!): Contact
+    allContacts: [Contact]
+
+}
+type Mutation {
+    createUser(email: String!, password: String!): User
+    updateUser(id: Int!, email: String, password: String): User
+    createAffiliate(affiliate_email: String!, affiliate_phone: String,
+    affiliate_fname: String!,
+    affiliate_lname: String!, affiliate_subdomain: String!):Affiliate,
+    updateAffiliate(affiliate_email: String!, affiliate_phone: String,
+    affiliate_fname: String!,
+    affiliate_lname: String!, affiliate_subdomain: String!):Affiliate,
+    deleteAffiliate(id: Int!):Affiliate
+    loginUser(email: String!, password: String!): Token
+    createContact(email: String!, given_name: String!, family_name: String,
+    phone: String!, affiliate_id: Int!): Contact
+    updateContact (email: String!, given_name: String!, family_name: String,
+    phone: String!, affiliate_id: Int!): Contact
+    deleteContact(id: Int!): Contact
+}
+
