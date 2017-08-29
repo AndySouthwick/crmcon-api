@@ -35,6 +35,7 @@ type Token {
 type Query {
     User(id: Int!): User
     allUsers: [User]
+    loggedInUser: User
     Affiliate(id: Int!): Affiliate
     allAffiliates: [Affiliate]
     Contact(id: Int!): Contact

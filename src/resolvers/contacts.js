@@ -1,15 +1,16 @@
 import Contact from "../db/models/contact";
 import logger from '../logger'
 import jwt from 'jsonwebtoken'
+import { salt }from '../secrets'
+import { isLoggedIn } from '../utils'
 
-const salt = "felsjf32rfion32ojeqwdlfk3q2l"
 
 export default {
     Query: {
         async allContacts (_doc, _args, context, _info) {
             try {
                 console.log(context)
-                const decodedToken = jwt.verify(context.token, salt)
+                const decodedToken = isLoggedIn(context.token)
                 const contacts = await Contact.findAll()
                 return contacts.map((contacts) => contacts.get({plain: true}))
             }catch (e){
@@ -17,9 +18,9 @@ export default {
                 throw e
             }
         },
-        async Contact  (_doc, args, _context, _info) {
+        async Contact  (_doc, args, context, _info) {
             try{
-                const decodedToken = jwt.verify(context.token, salt)
+                const decodedToken = isLoggedIn(context.token)
                 const singleContact = await Contact.findById(args.id)
                 return singleContact.get({plain: true})
             }catch (e){
